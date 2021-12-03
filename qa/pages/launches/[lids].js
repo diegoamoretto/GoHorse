@@ -6,7 +6,7 @@ import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 const Launch = ({ launch }) => {
   const router = useRouter()
   const { lids } = router.query
-  console.log(launch)
+ // console.log(launch)
  // return <p>Launch: {lids}</p>
 
   return (
@@ -26,22 +26,22 @@ export async function getStaticPaths() {
    fallback:  'blocking'}
 }
 
-export async function getStaticProps() {
+export async function getStaticProps(context) {
   const client = new ApolloClient({
     uri: 'https://api.spacex.land/graphql/',
     cache: new InMemoryCache()
   });
-  
-  const router = useRouter()
-  const { lids } = router.query
 
-  console.log(lids)
+  const sludid = context.params.lids
+  console.log(sludid)
+
+
 
   const { data } = await client.query({
     query: gql`
       query GetLaunch {
         
-          launch(id: "13") {
+          launch(id: "${sludid}") {
             id
             mission_name
             rocket {
