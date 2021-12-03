@@ -1,8 +1,46 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 
-export default function Home() {
+export async function getStaticProps() {
+  const client = new ApolloClient({
+    uri: 'https://api.spacex.land/graphql/',
+    cache: new InMemoryCache()
+  });
+
+  const { data } = await client.query({
+    query: gql`
+      query GetLaunches {
+        launchesPast(limit: 10) {
+          id
+          mission_name
+          launch_date_local
+          launch_site {
+            site_name_long
+          }
+          links {
+            article_link
+            video_link
+            mission_patch
+          }
+          rocket {
+            rocket_name
+          }
+        }
+      }
+    `
+  });
+  console.log(data);
+  return {
+    props: {
+      launches: []
+    }
+  }
+}
+
+export default function Home({ launches }) {
+  console.log('launches', launches);
   return (
     <div className={styles.container}>
       <Head>
