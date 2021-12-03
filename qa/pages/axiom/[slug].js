@@ -18,12 +18,13 @@ export async function getStaticProps(context) {
   
   const { data } = await client.query({
     query: gql`
-      query GetLaunches {
-        questionCollection {
-          items {
+      query Get {
+        axiomsCollection  {
+          items  {
             slug
-            question 
-            shortAnswer
+            number
+            title
+            description
           }
         }
       }
@@ -38,7 +39,7 @@ export async function getStaticProps(context) {
   
   return {
     props: {
-      questionCollection: data.questionCollection
+      axiomsCollection: data.axiomsCollection
     }
   }
 }
@@ -50,15 +51,15 @@ export async function getStaticPaths() {
     }
 }
 
-export default function Question({ questionCollection }) {
+export default function Question({ axiomsCollection  }) {
   const router = useRouter()
   const { slug } = router.query;
-  const q = questionCollection.items.find(element => element.slug == slug);
+  const q = axiomsCollection.items.find(element => element.slug == slug);
  
   return (
     <>
-    <h1>{q.question} </h1>
-    <p>{q.shortAnswer}</p>
+    <h3>{q.number} - {q.title}</h3>
+    <p>{q.description}</p>
     </>
   )
 }
