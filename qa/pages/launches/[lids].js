@@ -1,21 +1,20 @@
 import { useRouter } from 'next/router'
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import Link from 'next/link'
 
 
 
 const Launch = ({ launch }) => {
   const router = useRouter()
   const { lids } = router.query
- // console.log(launch)
- // return <p>Launch: {lids}</p>
-
+ 
   return (
-    <div> <span>Mission Name:  {launch.mission_name}</span><br />
+    <div> 
+     <p><Link href="/launchHome">back</Link></p>
+     <span>Mission Name:  {launch.mission_name}</span><br />
      <span>Mission Year:  {launch.launch_year}</span><br />
      <span>Mission Date:  {launch.launch_date_local}</span>
-     
     </div>
-    
   )
 }
 
@@ -33,10 +32,6 @@ export async function getStaticProps(context) {
   });
 
   const sludid = context.params.lids
-  console.log(sludid)
-
-
-
   const { data } = await client.query({
     query: gql`
       query GetLaunch {

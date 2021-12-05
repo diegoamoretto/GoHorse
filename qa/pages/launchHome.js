@@ -41,10 +41,12 @@ export async function getStaticProps() {
 }
 
 export default function Home({ launches }) {
-  console.log('launches', launches);
+  
   return (
-    <div className={styles.grid}>
-      Launch list<br/>
+    <>
+    <p><Link href="/">back samples home</Link></p>
+    <p>
+    <h2>Launch list:</h2>
       <ul>
         {launches.map((launch) => (
           <li key={launch.id}>
@@ -54,8 +56,11 @@ export default function Home({ launches }) {
           </li>
         ))}
       </ul>
-      <br />
-      Launch videos: 
+      </p>
+
+      <br/>
+    <h2>Launch videos: </h2>
+    <div className={styles.grid}>
       {launches.map(launch => {
         return (
           <a key={launch.id} href={launch.links.video_link} className={styles.card}>
@@ -64,7 +69,9 @@ export default function Home({ launches }) {
           </a>
         );
       })}
+       
       
     </div>
+    </>
   )
 }
