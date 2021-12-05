@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import Link from 'next/link'
 
 export async function getStaticProps() {
   const client = new ApolloClient({
@@ -43,6 +44,18 @@ export default function Home({ launches }) {
   console.log('launches', launches);
   return (
     <div className={styles.grid}>
+      Launch list<br/>
+      <ul>
+        {launches.map((launch) => (
+          <li key={launch.id}>
+            <Link href={`/launches/${encodeURIComponent(launch.id)}`}>
+              <a>{launch.mission_name}</a>
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <br />
+      Launch videos: 
       {launches.map(launch => {
         return (
           <a key={launch.id} href={launch.links.video_link} className={styles.card}>
@@ -51,6 +64,7 @@ export default function Home({ launches }) {
           </a>
         );
       })}
+      
     </div>
   )
 }

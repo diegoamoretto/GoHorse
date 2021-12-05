@@ -3,6 +3,7 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import Link from 'next/link'
+import Nav from "./components/Nav"
 
 export async function getStaticProps() {
   const space = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID;
@@ -44,6 +45,7 @@ export async function getStaticProps() {
 export default function Home({ axiomsCollection }) {
   return (
     <>
+    <Nav/>
     <h3>eXtreme Go Horse (XGH) Process</h3>
     <p>The oldest and true development method.</p>
     <ol > 
